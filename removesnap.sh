@@ -11,6 +11,7 @@ sudo snap remove gnome-3-34-1804
 sudo snap remove core18
 sudo snap remove snapd
 snap list # expect: No snaps are installed yet. Try 'snap install hello-world'.
+#hello
  
 sudo umount /run/snap/ns
  
