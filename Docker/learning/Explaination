@@ -1,0 +1,14 @@
+1. Created a simple web app using flash 
+2. Created index , json & app File 
+3. Created Dockerfile => DockerImage => Dockercontainer 
+    Commands 
+        docker build -t test .
+        docker run -d -p 5000:5000 test
+            #Unable to use the port 8080 as the container cannot overtake the localhost 
+            #Hence used the default port of flask "5000"
+4. Got the Container name using " docker container ls"
+5. Retrieved the IP Address using "docker inspect e27aa7b355ee | grep -i IPAddress"
+6. Opened the webpage using IPAddress:PortNumber , example 172.17.0.2:5000
+
+
+Note : I already had installed docker on my Ubuntu machine hence didnt add the docker installation steps here 

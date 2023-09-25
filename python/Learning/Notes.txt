@@ -1,0 +1,8 @@
+
+Yahoo User Name : testuseraws1
+aws account : testuseraws1@yahoo.com
+password : Connor23
+
+
+mysql -u joelj -p
+

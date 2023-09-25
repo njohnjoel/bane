@@ -1,0 +1,9 @@
+{
+    "service_name": "everyday", 
+    "version": "1.0.0" ,
+    "git_commit_sha": "abc57858585",
+    "environment": {
+        "service_port":"8000",
+        "log_level" : "INFO"
+    }
+}

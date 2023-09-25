@@ -1,0 +1,25 @@
+resourse 
+
+user_data = “${file(”filepath")}"
+key_name = “${aws_key_pair.terraform-demo.key_name}”
+
+tags 
+Name = “”
+Batch = “”
+
+
+AMI Image ID's  : 
+https://aws.amazon.com/amazon-linux-ami/ 
+https://cloud-images.ubuntu.com/locator/ec2/ 
+https://wiki.centos.org/Cloud/AWS 
+
+#git init
+#git add README.md
+#git commit -m "first commit"
+#git remote add origin https://github.com/njohnjoel/devops.git
+#git push origin master
+
+
+Terraform Commands
+terraform apply -var="region=us-east-1"
+terraform apply -var-file="filename.tfvars"
