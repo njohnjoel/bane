@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96458641-3e44-422c-adcc-6854bb9f3420" name="Changes" comment="Done">
-      <change afterPath="$PROJECT_DIR$/Shell/parrotos.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python/OperatingSystems/parrot_os.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Shell/parrotos.sh" beforeDir="false" afterPath="$PROJECT_DIR$/Shell/parrot_os.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python/OperatingSystems/parrot_os.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/OperatingSystems/parrot_os.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +42,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "feature/parrot__os",
-    "last_opened_file_path": "/home/joelj/Desktop/Joe/Codes",
+    "last_opened_file_path": "/proj/bane",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.0",
