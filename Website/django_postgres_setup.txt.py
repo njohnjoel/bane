@@ -1,30 +1,27 @@
 import subprocess
 import platform
 import sys
-import getpass
 import os
 from datetime import datetime
 
-
-def ask_sudo_password():
-    sudo_password = getpass.getpass(prompt='Enter your sudo password: ')
-    return sudo_password
+log_dir = "/proj/logs/"
+web_dir = "/proj/django"
+db_dir = "/proj/database"
+log_file = f"{log_dir}/install_{datetime.now().strftime('%Y%m%d%H%M%S')}.log"
 
 
 def run_with_sudo(command, sudo_password, log_file):
     command_with_sudo = ['sudo', '-S'] + command
     with open(log_file, 'a') as log:
         log.write(f"Running command: {' '.join(command)}\n")
-        subprocess.run(command_with_sudo, input=(sudo_password + '\n').encode('utf-8'), stdout=log, stderr=log)
+        process = subprocess.Popen(command_with_sudo, stdin=subprocess.PIPE, stdout=log, stderr=log)
+        process.communicate(input=(sudo_password + '\n').encode())
 
 
-def create_directories():
-    sudo_password = ask_sudo_password()
-    run_with_sudo(['mkdir', '-p', '/proj/'], sudo_password, 'install_django_postgres.log')
-    run_with_sudo(['mkdir', '-p', '/proj/logs/'], sudo_password, 'install_django_postgres.log')
-    run_with_sudo(['mkdir', '-p', '/proj/django'], sudo_password, 'install_django_postgres.log')
-    run_with_sudo(['mkdir', '-p', '/proj/database'], sudo_password, 'install_django_postgres.log')
-    run_with_sudo(['mkdir', '-p', '/proj/logs/'], sudo_password, 'install_django_postgres.log')
+def install_package(package, sudo_password, log_file):
+    result = subprocess.run(['which', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if result.returncode != 0:
+        run_with_sudo(['sudo', 'yum', 'install', '-y', package], sudo_password, log_file)
 
 
 def install_packages_ubuntu():
@@ -32,96 +29,82 @@ def install_packages_ubuntu():
     subprocess.run(['sudo', 'apt', 'install', 'python3-pip', 'python3-dev', 'postgresql', 'libpq-dev'])
 
 
-def install_packages_centos():
-    install_required_packages()
+def install_packages_centos(sudo_password):
+    install_required_packages(sudo_password, log_file)
     subprocess.run(['sudo', 'yum', 'install', 'python3-pip', 'python3-devel', 'postgresql', 'postgresql-devel'])
 
 
-def install_required_packages():
-    sudo_password = ask_sudo_password()
+def install_required_packages(sudo_password, log_file):
     packages = ['git', 'curl', 'wget', 'openjdk-17', 'epel-release']
-
     for package in packages:
-        result = subprocess.run(['which', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if result.returncode != 0:
-            log_file = f'/proj/logs/install_django_postgres_{datetime.now().strftime("%Y%m%d%H%M%S")}.log'
-            run_with_sudo(['sudo', 'yum', 'install', '-y', package], sudo_password, log_file)
+        install_package(package, sudo_password, log_file)
 
 
-def create_postgres_user_database():
-    sudo_password = ask_sudo_password()
+def create_postgres_user_database(sudo_password):
     run_with_sudo(['sudo', '-u', 'postgres', 'createuser', '--interactive', '--username=joelj'], sudo_password,
-                  'install_django_postgres.log')
-    run_with_sudo(['sudo', '-u', 'postgres', 'createdb', 'mysite', '--owner=joelj'], sudo_password,
-                  'install_django_postgres.log')
+                  log_file)
+    run_with_sudo(['sudo', '-u', 'postgres', 'createdb', 'mysite', '--owner=joelj'], sudo_password, log_file)
 
 
-def install_django():
-    subprocess.run(['pip3', 'install', 'django'])
+def install_django(sudo_password, log_file):
+    subprocess.run([sys.executable, '-m', 'pip', 'install', 'django'], check=True)
+    print("Django installation completed.")
 
 
-def configure_django():
-    os.chdir('/proj/django')
-    subprocess.run(['django-admin', 'startproject', 'myproject'])
+def configure_django(log_file):
+    os.makedirs("/proj/django/myproject", exist_ok=True)
+    os.chdir("/proj/django/myproject")
+
+    # Create virtual environment
+    subprocess.run([sys.executable, '-m', 'venv', 'venv'], check=True)
+
+    # Activate virtual environment
+    activate_venv_command = 'source venv/bin/activate' if 'posix' in os.name else 'venv\\Scripts\\activate'
+    subprocess.run(activate_venv_command, shell=True, check=True)
+
+    # Install Django inside the virtual environment
+    install_django(None, log_file)
+
+    # Configure Django project
+    subprocess.run([sys.executable, '-m', 'django', 'startproject', 'myproject'])
+    print("Django project configured.")
 
 
 def configure_postgresql():
-    os.chdir('/proj/database')
+    os.chdir(db_dir)
     subprocess.run(['sudo', '-u', 'postgres', 'initdb', 'data'])
     subprocess.run(['sudo', '-u', 'postgres', 'pg_ctl', '-D', 'data', '-l', 'logfile', 'start'])
 
 
 def start_django_server():
-    os.chdir('/proj/django/myproject')
-    subprocess.run(['python3', 'manage.py', 'runserver', '0.0.0.0:8003'])  # Updated to use port 8003
+    os.chdir(os.path.join(web_dir, 'myproject'))
+    subprocess.run(['python3', 'manage.py', 'runserver', '0.0.0.0:8003'])
 
 
-def print_start_time():
-    print(f"Script started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
-
-def print_end_time():
-    print(f"Script completed at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
-
-def check_and_unblock_firewall():
-    sudo_password = ask_sudo_password()
+def check_and_unblock_firewall(sudo_password):
     firewall_status = subprocess.run(['sudo', 'ufw', 'status'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if "inactive" not in firewall_status.stdout.decode('utf-8'):
+        run_with_sudo(['sudo', 'ufw', 'allow', '8000:8003/tcp'], sudo_password, log_file)
+        run_with_sudo(['sudo', 'ufw', 'reload'], sudo_password, log_file)
 
-    if "inactive" in firewall_status.stdout.decode('utf-8'):
-        print("Firewall is inactive. No action required.")
-    else:
-        print("Firewall is active. Unblocking ports 8000-8003...")
-        run_with_sudo(['sudo', 'ufw', 'allow', '8000:8003/tcp'], sudo_password, 'install_django_postgres.log')
-        run_with_sudo(['sudo', 'ufw', 'reload'], sudo_password, 'install_django_postgres.log')
-        print("Ports unblocked.")
+
+def ask_sudo_password():
+    return getpass.getpass(prompt='Enter your sudo password: ')
 
 
 def main():
-    print_start_time()
-    create_directories()
-    install_required_packages()
-    check_and_unblock_firewall()
+    sudo_password = ask_sudo_password()
 
-    if platform.system() == 'Linux':
-        if platform.dist()[0] == 'Ubuntu':
-            install_packages_ubuntu()
-        elif platform.dist()[0] == 'CentOS':
-            install_packages_centos()
-        else:
-            print("Unsupported Linux distribution")
-            sys.exit(1)
-    else:
-        print("Unsupported operating system")
-        sys.exit(1)
+    install_required_packages(sudo_password, log_file)
+    check_and_unblock_firewall(sudo_password)
 
-    create_postgres_user_database()
-    install_django()
-    configure_django()
+    create_postgres_user_database(sudo_password)
     configure_postgresql()
+    install_django(sudo_password, log_file)
+    configure_django(log_file)
     start_django_server()
 
-    print_end_time()
+    print(f"Script completed at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("Django and PostgreSQL installation completed. Server started at http://localhost:8003/")
 
 

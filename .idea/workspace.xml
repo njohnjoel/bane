@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96458641-3e44-422c-adcc-6854bb9f3420" name="Changes" comment="Created and Tested tools to installed on ubuntu desktop">
-      <change afterPath="$PROJECT_DIR$/python/scripts/pdfmetadata.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python/scripts/random_numbers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python/OperatingSystems/centos9_devops_install.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/python/scripts/icici_insurance.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Website/django_postgres_setup.txt.py" beforeDir="false" afterPath="$PROJECT_DIR$/Website/django_postgres_setup.txt.py" afterDir="false" />
     </list>
@@ -67,7 +65,13 @@
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="feature/parrot_os" />
+      <force-push-target remote-path="origin" branch="feature/First_Commit" />
     </force-push-targets>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/python/scripts" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="initial_setup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -139,7 +143,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696670888688</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Created and Tested tools to installed on ubuntu desktop">
+      <option name="closed" value="true" />
+      <created>1706801949270</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706801949270</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
