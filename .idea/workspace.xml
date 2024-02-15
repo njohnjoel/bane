@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96458641-3e44-422c-adcc-6854bb9f3420" name="Changes" comment="Created and Tested tools to installed on ubuntu desktop">
-      <change afterPath="$PROJECT_DIR$/python/OperatingSystems/centos9_devops_install.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/python/scripts/icici_insurance.py" afterDir="false" />
+    <list default="true" id="96458641-3e44-422c-adcc-6854bb9f3420" name="Changes" comment="Added icici_insurance.py">
+      <change afterPath="$PROJECT_DIR$/python/scripts/icici_ps.ps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Website/django_postgres_setup.txt.py" beforeDir="false" afterPath="$PROJECT_DIR$/Website/django_postgres_setup.txt.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706801949270</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added icici_insurance.py">
+      <option name="closed" value="true" />
+      <created>1707760660230</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1707760660230</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -169,6 +175,7 @@
     <MESSAGE value="Done" />
     <MESSAGE value="Updated python command" />
     <MESSAGE value="Created and Tested tools to installed on ubuntu desktop" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created and Tested tools to installed on ubuntu desktop" />
+    <MESSAGE value="Added icici_insurance.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added icici_insurance.py" />
   </component>
 </project>
